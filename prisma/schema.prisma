@@ -1,0 +1,141 @@
+// Prisma schema for Clean Puja Award – Pujo Committee Registration Portal
+// Database: MySQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum CommitteeStatus {
+  REGISTERED
+  SHORTLISTED
+  WINNER
+  REJECTED
+}
+
+enum PhotoPhase {
+  DURING // Puja চলাকালীন
+  AFTER  // Puja পরবর্তী
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  JURY
+}
+
+enum EmailType {
+  REGISTRATION_CREDENTIALS
+  PASSWORD_RESET
+  DEADLINE_REMINDER
+  CUSTOM_NOTICE
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+// 1. Committees (Pujo Committees)
+model Committee {
+  id                 String          @id @default(cuid()) @db.VarChar(36)
+  committeeName      String          @map("committee_name") @db.VarChar(150)
+  pujoName           String          @map("pujo_name") @db.VarChar(150)
+  area               String          @db.VarChar(150)
+  address            String          @db.VarChar(300)
+  wardNo             Int             @map("ward_no") // KMC Ward No 1–144
+  contactNumber      String          @map("contact_number") @db.VarChar(15) // 10-digit Indian Mobile
+  email              String          @unique @db.VarChar(255)
+  passwordHash       String          @map("password_hash") @db.VarChar(255)
+  mustChangePassword Boolean         @default(true) @map("must_change_password")
+  status             CommitteeStatus @default(REGISTERED)
+  score              Float?          @map("score") // Admin / Jury score for ranking
+  adminNotes         String?         @map("admin_notes") @db.Text
+  createdAt          DateTime        @default(now()) @map("created_at")
+  updatedAt          DateTime        @updatedAt @map("updated_at")
+
+  images             Image[]
+  emailLogs          EmailLog[]
+
+  @@map("committees")
+}
+
+// 2. Uploaded Photos (Max 10 during, 10 after)
+model Image {
+  id               String     @id @default(cuid()) @db.VarChar(36)
+  committeeId      String     @map("committee_id") @db.VarChar(36)
+  phase            PhotoPhase
+  s3Key            String     @map("s3_key") @db.VarChar(512)
+  thumbKey         String?    @map("thumb_key") @db.VarChar(512)
+  originalFilename String     @map("original_filename") @db.VarChar(255)
+  sizeBytes        Int        @map("size_bytes")
+  mimeType         String?    @map("mime_type") @db.VarChar(50)
+  takenAt          DateTime?  @map("taken_at") // EXIF capture date for authenticity verification
+  createdAt        DateTime   @default(now()) @map("created_at")
+
+  committee        Committee  @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+
+  @@index([committeeId, phase])
+  @@map("images")
+}
+
+// 3. Dynamic Application Settings & Phase Timelines
+model Setting {
+  key         String   @id @db.VarChar(100)
+  value       String   @db.Text
+  description String?  @db.VarChar(255)
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
+}
+
+// 4. Admins & Jury Members
+model Admin {
+  id           String    @id @default(cuid()) @db.VarChar(36)
+  email        String    @unique @db.VarChar(255)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  name         String?   @db.VarChar(100)
+  role         AdminRole @default(ADMIN)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("admins")
+}
+
+// 5. Transactional Email Logs & Retries
+model EmailLog {
+  id             String      @id @default(cuid()) @db.VarChar(36)
+  committeeId    String?     @map("committee_id") @db.VarChar(36)
+  type           EmailType
+  recipientEmail String      @map("recipient_email") @db.VarChar(255)
+  subject        String?     @db.VarChar(255)
+  status         EmailStatus @default(PENDING)
+  errorMessage   String?     @map("error_message") @db.Text
+  retryCount     Int         @default(0) @map("retry_count")
+  createdAt      DateTime    @default(now()) @map("created_at")
+
+  committee      Committee?  @relation(fields: [committeeId], references: [id], onDelete: SetNull)
+
+  @@index([committeeId])
+  @@index([recipientEmail])
+  @@index([status])
+  @@map("email_logs")
+}
+
+// 6. Password Reset Tokens (for Forgot Password workflow)
+model PasswordResetToken {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  email     String   @db.VarChar(255)
+  token     String   @unique @db.VarChar(255)
+  expiresAt DateTime @map("expires_at")
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([email])
+  @@map("password_reset_tokens")
+}
