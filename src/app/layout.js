@@ -11,6 +11,9 @@ const bengaliFont = Hind_Siliguri({
 export const metadata = {
   title: "ক্লিন পূজা অ্যাওয়ার্ড | Clean Puja Award",
   description: "দুর্গাপূজা কমিটিদের পরিবেশ সচেতনতা ও পরিচ্ছন্নতা সম্মাননা পোর্টাল",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {

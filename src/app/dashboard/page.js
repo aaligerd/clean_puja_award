@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import BrandFooterBanner from "@/components/BrandFooterBanner";
 
 export default function CommitteeDashboard() {
   const router = useRouter();
@@ -861,6 +862,9 @@ export default function CommitteeDashboard() {
           </div>
         </div>
       )}
+
+      {/* Brand Section before footer */}
+      <BrandFooterBanner />
 
       {/* Footer */}
       <footer className="bg-[#38000c] border-t border-amber-500/20 py-4 px-4 text-center text-xs text-rose-200/60">

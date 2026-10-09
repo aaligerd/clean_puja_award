@@ -100,15 +100,15 @@ export default function LoginPage() {
           <div className="puja-card p-6 sm:p-8 relative overflow-hidden shadow-2xl">
             {/* Top Badge */}
             <div className="text-center mb-6">
-              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/15 border border-amber-400/30 text-amber-300 text-xs font-semibold mb-3">
+              {/* <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/15 border border-amber-400/30 text-amber-300 text-xs font-semibold mb-3">
                 <span>কমিটি ড্যাশবোর্ড এক্সেস</span>
-              </div>
+              </div> */}
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-                কমিটি <span className="text-[#ffc72c]">লগইন</span>
+                Committee <span className="text-[#ffc72c]">Login</span>
               </h1>
-              <p className="text-rose-200/80 text-xs sm:text-sm mt-1.5">
+              {/* <p className="text-rose-200/80 text-xs sm:text-sm mt-1.5">
                 আপনার নিবন্ধিত ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন
-              </p>
+              </p> */}
             </div>
 
             {/* Error Message */}
@@ -123,7 +123,7 @@ export default function LoginPage() {
               {/* Email Input */}
               <div>
                 <label className="block text-xs sm:text-sm font-semibold text-rose-100 mb-1.5">
-                  নিবন্ধিত ইমেইল (User ID) <span className="text-amber-400">*</span>
+                  Email ID <span className="text-amber-400">*</span>
                 </label>
                 <input
                   type="email"
@@ -131,7 +131,7 @@ export default function LoginPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="উদাঃ committee@gmail.com"
+                  // placeholder="Ex: committee@gmail.com"
                   className="w-full bg-[#3b000f]/80 border border-amber-500/30 rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 text-sm"
                 />
               </div>
@@ -140,7 +140,7 @@ export default function LoginPage() {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-xs sm:text-sm font-semibold text-rose-100">
-                    লগইন পাসওয়ার্ড <span className="text-amber-400">*</span>
+                    Password <span className="text-amber-400">*</span>
                   </label>
                 </div>
                 <div className="relative">
@@ -150,16 +150,27 @@ export default function LoginPage() {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    placeholder="আপনার পাসওয়ার্ড লিখুন"
                     className="w-full bg-[#3b000f]/80 border border-amber-500/30 rounded-lg px-4 py-2.5 pr-10 text-white placeholder-rose-300/40 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-rose-300 hover:text-amber-300 text-xs"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-rose-300/70 hover:text-amber-300 transition-colors p-1 flex items-center justify-center focus:outline-none"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                     tabIndex={-1}
                   >
-                    {showPassword ? "লুকান" : "দেখুন"}
+                    {showPassword ? (
+                      /* Eye Open Icon */
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    ) : (
+                      /* Eye Closed Icon */
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
@@ -177,11 +188,11 @@ export default function LoginPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      <span>যাচাই করা হচ্ছে...</span>
+                      <span>Please Wait...</span>
                     </>
                   ) : (
                     <>
-                      <span>লগইন করুন</span>
+                      <span>Login</span>
                       <span className="text-lg">→</span>
                     </>
                   )}
@@ -191,9 +202,9 @@ export default function LoginPage() {
 
             {/* Bottom Link to Register */}
             <div className="mt-6 pt-5 border-t border-amber-500/20 text-center text-xs text-rose-200/80">
-              <span>আপনার পূজা কমিটি এখনও নিবন্ধিত হয়নি? </span>
+              <span>Still not registered? </span>
               <Link href="/#register" className="text-amber-300 hover:underline font-bold">
-                এখানে রেজিস্টার করুন
+                Register Now
               </Link>
             </div>
           </div>

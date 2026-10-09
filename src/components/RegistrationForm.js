@@ -264,10 +264,10 @@ export default function RegistrationForm() {
                 href="/login"
                 className="btn-gold w-full sm:w-auto px-8 py-3.5 rounded-full font-extrabold text-base sm:text-lg flex items-center justify-center gap-2 shadow-xl text-slate-950"
               >
-                <span>কমিটি পোর্টালে লগইন করুন</span>
+                <span>Committee Login</span>
                 <span className="text-xl leading-none">→</span>
               </Link>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => {
                   setIsSuccess(false);
@@ -288,7 +288,7 @@ export default function RegistrationForm() {
                 className="w-full sm:w-auto puja-card px-6 py-3 rounded-full text-rose-200 hover:text-white font-medium text-sm transition-all cursor-pointer"
               >
                 অন্য কোনো কমিটি নথিভুক্ত করুন
-              </button>
+              </button> */}
             </div>
           </div>
         ) : (
