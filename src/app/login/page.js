@@ -63,13 +63,13 @@ export default function LoginPage() {
       <header className="bg-[#4a0011] border-b border-amber-500/25 py-3.5 px-4 sm:px-8 shadow-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 p-0.5 border border-amber-400/40">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
               <Image
-                src="https://images.assettype.com/eisamay/2026-09-14/9yn8yftt/es-logo.png"
+                src="/brand-icon.png"
                 alt="এই সময় লোগো"
-                width={32}
-                height={32}
-                className="w-full h-full object-contain rounded-full"
+                width={40}
+                height={40}
+                className="w-full h-full object-cover scale-135"
                 priority
               />
             </div>

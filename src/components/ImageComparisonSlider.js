@@ -54,18 +54,18 @@ export default function ImageComparisonSlider() {
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove]);
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+    <section className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
       {/* Section Heading */}
       <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-400/30 px-3.5 py-1 rounded-full text-amber-300 text-xs sm:text-sm font-medium mb-3">
+        {/* <div className="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-400/30 px-3.5 py-1 rounded-full text-amber-300 text-xs sm:text-sm font-medium mb-3">
           <span>প্যান্ডেল পরিচ্ছন্নতা তুলনা (Before vs After)</span>
-        </div>
+        </div> */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
           উৎসবের আলো থেকে <span className="text-[#ffc72c]">পরিচ্ছন্নতার আদর্শ</span>
         </h2>
-        <p className="text-rose-200/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+        {/* <p className="text-rose-200/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
           মাঝের গোল্ডেন স্লাইডারটি ডানে বা বাঁয়ে টেনে দেখুন পূজা চলাকালীন ও পরবর্তী পরিচ্ছন্নতার বাস্তব চিত্র।
-        </p>
+        </p> */}
       </div>
 
       {/* Top Dual Status Indicators */}
@@ -79,7 +79,7 @@ export default function ImageComparisonSlider() {
           }`}
         >
           <span className="w-2 h-2 rounded-full bg-amber-400" />
-          <span>পূজা চলাকালীন (Before)</span>
+          <span>পূজা চলাকালীন</span>
         </button>
 
         <button
@@ -91,7 +91,7 @@ export default function ImageComparisonSlider() {
           }`}
         >
           <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span>পূজা পরবর্তী (After)</span>
+          <span>পূজা পরবর্তী</span>
         </button>
       </div>
 

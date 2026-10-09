@@ -16,6 +16,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const q = (searchParams.get('q') || '').trim();
     const ward = searchParams.get('ward') ? parseInt(searchParams.get('ward'), 10) : null;
+    const zone = searchParams.get('zone') || 'ALL';
     const status = (searchParams.get('status') || 'ALL').toUpperCase();
     const photoFilter = searchParams.get('photoFilter') || 'ALL';
     const sortBy = searchParams.get('sortBy') || 'latest';
@@ -28,7 +29,9 @@ export async function GET(request) {
         { committeeName: { contains: q } },
         { pujoName: { contains: q } },
         { area: { contains: q } },
+        { zone: { contains: q } },
         { address: { contains: q } },
+        { contactPerson: { contains: q } },
         { contactNumber: { contains: q } },
         { email: { contains: q } },
       ];
@@ -36,6 +39,10 @@ export async function GET(request) {
 
     if (ward && !isNaN(ward)) {
       where.wardNo = ward;
+    }
+
+    if (zone && zone !== 'ALL') {
+      where.zone = zone;
     }
 
     if (['REGISTERED', 'SHORTLISTED', 'WINNER', 'REJECTED'].includes(status)) {
@@ -81,8 +88,10 @@ export async function GET(request) {
         committeeName: c.committeeName,
         pujoName: c.pujoName,
         area: c.area,
+        zone: c.zone,
         address: c.address,
         wardNo: c.wardNo,
+        contactPerson: c.contactPerson,
         contactNumber: c.contactNumber,
         email: c.email,
         status: c.status,

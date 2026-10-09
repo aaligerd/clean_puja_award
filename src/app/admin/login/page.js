@@ -66,13 +66,13 @@ export default function AdminLoginPage() {
       {/* Top Navbar */}
       <header className="max-w-6xl mx-auto w-full flex items-center justify-between py-2">
         <div className="flex items-center gap-3">
-          <div className="relative w-9 h-9 rounded-full overflow-hidden bg-white/10 p-0.5 border border-amber-400/40">
+          <div className="relative w-9 h-9 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
             <Image
-              src="https://images.assettype.com/eisamay/2026-09-14/9yn8yftt/es-logo.png"
+              src="/brand-icon.png"
               alt="Ei Samay Logo"
-              width={36}
-              height={36}
-              className="w-full h-full object-contain rounded-full"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover scale-135"
               priority
             />
           </div>

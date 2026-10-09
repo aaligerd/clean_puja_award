@@ -47,8 +47,10 @@ model Committee {
   committeeName      String          @map("committee_name") @db.VarChar(150)
   pujoName           String          @map("pujo_name") @db.VarChar(150)
   area               String          @db.VarChar(150)
+  zone               String?         @db.VarChar(50) // North Kolkata, Central Kolkata, South Kolkata
   address            String          @db.VarChar(300)
   wardNo             Int             @map("ward_no") // KMC Ward No 1–144
+  contactPerson      String?         @map("contact_person") @db.VarChar(150) // Contact Person Name
   contactNumber      String          @map("contact_number") @db.VarChar(15) // 10-digit Indian Mobile
   email              String          @unique @db.VarChar(255)
   passwordHash       String          @map("password_hash") @db.VarChar(255)

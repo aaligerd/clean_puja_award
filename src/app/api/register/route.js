@@ -11,8 +11,10 @@ export async function POST(request) {
       committeeName,
       pujoName,
       area,
+      zone,
       address,
       wardNo,
+      contactPerson,
       contactNumber,
       email,
     } = body;
@@ -20,16 +22,16 @@ export async function POST(request) {
     // 1. Validation
     const errors = {};
 
-    if (!committeeName || typeof committeeName !== 'string' || !committeeName.trim()) {
-      errors.committeeName = 'পূজা কমিটির নাম আবশ্যক।';
-    } else if (committeeName.trim().length > 150) {
-      errors.committeeName = 'কমিটির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
-    }
-
     if (!pujoName || typeof pujoName !== 'string' || !pujoName.trim()) {
       errors.pujoName = 'পূজার নাম আবশ্যক।';
     } else if (pujoName.trim().length > 150) {
       errors.pujoName = 'পূজার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
+    }
+
+    if (!committeeName || typeof committeeName !== 'string' || !committeeName.trim()) {
+      errors.committeeName = 'পূজা কমিটির নাম আবশ্যক।';
+    } else if (committeeName.trim().length > 150) {
+      errors.committeeName = 'কমিটির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
     }
 
     if (!area || typeof area !== 'string' || !area.trim()) {
@@ -38,15 +40,26 @@ export async function POST(request) {
       errors.area = 'এলাকার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
     }
 
+    const validZones = ['North Kolkata', 'Central Kolkata', 'South Kolkata'];
+    if (!zone || !validZones.includes(zone.toString().trim())) {
+      errors.zone = 'সঠিক জোন নির্বাচন করুন (North Kolkata, Central Kolkata, বা South Kolkata)।';
+    }
+
+    const ward = parseInt(wardNo, 10);
+    if (isNaN(ward) || ward < 1 || ward > 144) {
+      errors.wardNo = '১ থেকে ১৪৪ এর মধ্যে সঠিক কলকাতা পুরসভা ওয়ার্ড নম্বর নির্বাচন করুন।';
+    }
+
     if (!address || typeof address !== 'string' || !address.trim()) {
       errors.address = 'প্যান্ডেলের সম্পূর্ণ ঠিকানা আবশ্যক।';
     } else if (address.trim().length > 300) {
       errors.address = 'ঠিকানা সর্বোচ্চ ৩০০ অক্ষরের মধ্যে হতে হবে।';
     }
 
-    const ward = parseInt(wardNo, 10);
-    if (isNaN(ward) || ward < 1 || ward > 144) {
-      errors.wardNo = '১ থেকে ১৪৪ এর মধ্যে সঠিক কলকাতা পুরসভা ওয়ার্ড নম্বর নির্বাচন করুন।';
+    if (!contactPerson || typeof contactPerson !== 'string' || !contactPerson.trim()) {
+      errors.contactPerson = 'কমিটির দায়িত্বপ্রাপ্ত ব্যক্তির নাম আবশ্যক।';
+    } else if (contactPerson.trim().length > 150) {
+      errors.contactPerson = 'দায়িত্বপ্রাপ্ত ব্যক্তির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
     }
 
     const cleanedContact = (contactNumber || '').toString().trim().replace(/[\s-]/g, '');
@@ -119,8 +132,10 @@ export async function POST(request) {
         committeeName: committeeName.trim(),
         pujoName: pujoName.trim(),
         area: area.trim(),
+        zone: zone ? zone.toString().trim() : null,
         address: address.trim(),
         wardNo: ward,
+        contactPerson: contactPerson ? contactPerson.trim() : null,
         contactNumber: cleanedContact,
         email: cleanedEmail,
         passwordHash: passwordHash,

@@ -5,11 +5,13 @@ import Link from "next/link";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
-    committeeName: "",
     pujoName: "",
+    committeeName: "",
+    zone: "",
     area: "",
     wardNo: "",
     address: "",
+    contactPerson: "",
     contactNumber: "",
     email: "",
   });
@@ -25,16 +27,21 @@ export default function RegistrationForm() {
   const validate = () => {
     const errs = {};
 
+    if (!formData.pujoName.trim()) {
+      errs.pujoName = "পূজার নাম আবশ্যক।";
+    } else if (formData.pujoName.trim().length > 150) {
+      errs.pujoName = "পূজার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
+    }
+
     if (!formData.committeeName.trim()) {
       errs.committeeName = "পূজা কমিটির নাম আবশ্যক।";
     } else if (formData.committeeName.trim().length > 150) {
       errs.committeeName = "কমিটির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
     }
 
-    if (!formData.pujoName.trim()) {
-      errs.pujoName = "পূজার নাম আবশ্যক।";
-    } else if (formData.pujoName.trim().length > 150) {
-      errs.pujoName = "পূজার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
+    const validZones = ["North Kolkata", "Central Kolkata", "South Kolkata"];
+    if (!formData.zone || !validZones.includes(formData.zone)) {
+      errs.zone = "সঠিক জোন নির্বাচন করুন (North, Central, বা South Kolkata)।";
     }
 
     if (!formData.area.trim()) {
@@ -52,6 +59,12 @@ export default function RegistrationForm() {
       errs.address = "প্যান্ডেলের সম্পূর্ণ ঠিকানা আবশ্যক।";
     } else if (formData.address.trim().length > 300) {
       errs.address = "ঠিকানা সর্বোচ্চ ৩০০ অক্ষরের মধ্যে হতে হবে।";
+    }
+
+    if (!formData.contactPerson.trim()) {
+      errs.contactPerson = "কমিটির দায়িত্বপ্রাপ্ত ব্যক্তির নাম আবশ্যক।";
+    } else if (formData.contactPerson.trim().length > 150) {
+      errs.contactPerson = "দায়িত্বপ্রাপ্ত ব্যক্তির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
     }
 
     const cleanedPhone = formData.contactNumber.trim().replace(/[\s-]/g, "");
@@ -136,15 +149,9 @@ export default function RegistrationForm() {
       <div className="puja-card p-6 sm:p-10 relative overflow-hidden">
         {/* Header */}
         <div className="text-center mb-8">
-          {/* <div className="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-400/30 px-3.5 py-1 rounded-full text-amber-300 text-xs sm:text-sm font-medium mb-3">
-            <span>কমিটি আবেদনপত্র</span>
-          </div> */}
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
-            পূজা কমিটি <span className="text-[#ffc72c]">রেজিস্ট্রেশন ফর্ম</span>
+            Registration<span className="text-[#ffc72c]"> Form</span>
           </h2>
-          {/* <p className="text-rose-200/80 text-sm sm:text-base mt-2 max-w-xl mx-auto">
-            সঠিক তথ্য দিয়ে ফর্মটি জমা দিন এবং তৎক্ষণাৎ আপনার লগইন পাসওয়ার্ড গ্রহণ করুন।
-          </p> */}
         </div>
 
         {/* Server Response Feedback Message */}
@@ -225,7 +232,7 @@ export default function RegistrationForm() {
                   <button
                     type="button"
                     onClick={() => handleCopy(credentials.password, "password")}
-                    className="self-start sm:self-auto text-xs px-3.5 py-1.5 rounded-lg btn-gold transition-all font-bold flex items-center gap-1.5 active:scale-95 shadow-md"
+                    className="self-start sm:self-auto text-xs px-3.5 py-1.5 rounded-lg btn-gold transition-all font-bold flex items-center gap-1.5 active:scale-95 shadow-md text-slate-950"
                   >
                     {copiedField === "password" ? (
                       <>
@@ -255,7 +262,7 @@ export default function RegistrationForm() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link
                 href="/login"
-                className="btn-gold w-full sm:w-auto px-8 py-3.5 rounded-full font-extrabold text-base sm:text-lg flex items-center justify-center gap-2 shadow-xl"
+                className="btn-gold w-full sm:w-auto px-8 py-3.5 rounded-full font-extrabold text-base sm:text-lg flex items-center justify-center gap-2 shadow-xl text-slate-950"
               >
                 <span>কমিটি পোর্টালে লগইন করুন</span>
                 <span className="text-xl leading-none">→</span>
@@ -267,16 +274,18 @@ export default function RegistrationForm() {
                   setCredentials(null);
                   setServerMessage(null);
                   setFormData({
-                    committeeName: "",
                     pujoName: "",
+                    committeeName: "",
+                    zone: "",
                     area: "",
                     wardNo: "",
                     address: "",
+                    contactPerson: "",
                     contactNumber: "",
                     email: "",
                   });
                 }}
-                className="w-full sm:w-auto puja-card px-6 py-3 rounded-full text-rose-200 hover:text-white font-medium text-sm transition-all"
+                className="w-full sm:w-auto puja-card px-6 py-3 rounded-full text-rose-200 hover:text-white font-medium text-sm transition-all cursor-pointer"
               >
                 অন্য কোনো কমিটি নথিভুক্ত করুন
               </button>
@@ -284,40 +293,18 @@ export default function RegistrationForm() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
-            {/* Row 1: Committee Name & Pujo Name */}
+            {/* Row 1: Name of Puja & Name of Committee */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                  পূজা কমিটির নাম <span className="text-amber-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="committeeName"
-                  value={formData.committeeName}
-                  onChange={handleChange}
-                  placeholder="উদাঃ বিবেকানন্দ পার্ক সার্বজনীন দুর্গোৎসব"
-                  maxLength={150}
-                  className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
-                    errors.committeeName
-                      ? "border-red-500 ring-1 ring-red-500"
-                      : "border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
-                  }`}
-                />
-                {errors.committeeName && (
-                  <p className="text-rose-300 text-xs mt-1">{errors.committeeName}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                  পূজার নাম <span className="text-amber-400">*</span>
+                  Name of Puja <span className="text-amber-400">*</span>
                 </label>
                 <input
                   type="text"
                   name="pujoName"
                   value={formData.pujoName}
                   onChange={handleChange}
-                  placeholder="উদাঃ বিবেকানন্দ পার্ক দুর্গোৎসব ২০২৬"
+                  placeholder="e.g. Bagbazar Sarbojanin"
                   maxLength={150}
                   className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
                     errors.pujoName
@@ -329,20 +316,105 @@ export default function RegistrationForm() {
                   <p className="text-rose-300 text-xs mt-1">{errors.pujoName}</p>
                 )}
               </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-rose-100 mb-1.5">
+                  Name of Committee <span className="text-amber-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="committeeName"
+                  value={formData.committeeName}
+                  onChange={handleChange}
+                  placeholder="e.g. Bagbazar Sarbojanin Durgotsav Committee"
+                  maxLength={150}
+                  className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
+                    errors.committeeName
+                      ? "border-red-500 ring-1 ring-red-500"
+                      : "border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
+                  }`}
+                />
+                {errors.committeeName && (
+                  <p className="text-rose-300 text-xs mt-1">{errors.committeeName}</p>
+                )}
+              </div>
             </div>
 
-            {/* Row 2: Area & Ward No */}
+            {/* Row 2: Zone of Puja & KMC Ward No */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                  এলাকা / লোকালিটি <span className="text-amber-400">*</span>
+                  Zone of the Puja <span className="text-amber-400">*</span>
+                </label>
+                <select
+                  name="zone"
+                  value={formData.zone}
+                  onChange={handleChange}
+                  className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white focus:outline-none transition-colors ${
+                    errors.zone
+                      ? "border-red-500 ring-1 ring-red-500"
+                      : "border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
+                  }`}
+                >
+                  <option value="" disabled className="bg-[#4a0011] text-rose-200">
+                    Select Kolkata Zone
+                  </option>
+                  <option value="North Kolkata" className="bg-[#4a0011] text-white">
+                    North Kolkata (উত্তর কলকাতা)
+                  </option>
+                  <option value="Central Kolkata" className="bg-[#4a0011] text-white">
+                    Central Kolkata (মধ্য কলকাতা)
+                  </option>
+                  <option value="South Kolkata" className="bg-[#4a0011] text-white">
+                    South Kolkata (দক্ষিণ কলকাতা)
+                  </option>
+                </select>
+                {errors.zone && (
+                  <p className="text-rose-300 text-xs mt-1">{errors.zone}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-rose-100 mb-1.5">
+                  KMC Ward No <span className="text-amber-400">*</span>
+                </label>
+                <select
+                  name="wardNo"
+                  value={formData.wardNo}
+                  onChange={handleChange}
+                  className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white focus:outline-none transition-colors ${
+                    errors.wardNo
+                      ? "border-red-500 ring-1 ring-red-500"
+                      : "border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
+                  }`}
+                >
+                  <option value="" disabled className="bg-[#4a0011] text-rose-200">
+                    Ward No (1-144)
+                  </option>
+                  {Array.from({ length: 144 }, (_, i) => i + 1).map((w) => (
+                    <option key={w} value={w} className="bg-[#4a0011] text-white">
+                      Ward {w}
+                    </option>
+                  ))}
+                </select>
+                {errors.wardNo && (
+                  <p className="text-rose-300 text-xs mt-1">{errors.wardNo}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Row 3: Area/Locality & Contact Person Name */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block text-sm font-semibold text-rose-100 mb-1.5">
+                  Area / Locality <span className="text-amber-400">*</span>
                 </label>
                 <input
                   type="text"
                   name="area"
                   value={formData.area}
                   onChange={handleChange}
-                  placeholder="উদাঃ দক্ষিণ কলকাতা / গড়িয়াহাট"
+                  placeholder="e.g. Shyambazar, Gariahat, Park Circus"
                   maxLength={150}
                   className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
                     errors.area
@@ -357,37 +429,31 @@ export default function RegistrationForm() {
 
               <div>
                 <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                  কলকাতা পুরসভা ওয়ার্ড নং (KMC Ward No) <span className="text-amber-400">*</span>
+                  Contact Person Name <span className="text-amber-400">*</span>
                 </label>
-                <select
-                  name="wardNo"
-                  value={formData.wardNo}
+                <input
+                  type="text"
+                  name="contactPerson"
+                  value={formData.contactPerson}
                   onChange={handleChange}
-                  className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white focus:outline-none transition-colors ${
-                    errors.wardNo
+                  placeholder="e.g. Subir Mukherjee (Secretary)"
+                  maxLength={150}
+                  className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
+                    errors.contactPerson
                       ? "border-red-500 ring-1 ring-red-500"
                       : "border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
                   }`}
-                >
-                  <option value="" disabled className="bg-[#4a0011] text-rose-200">
-                    ওয়ার্ড নম্বর নির্বাচন করুন (১-১৪৪)
-                  </option>
-                  {Array.from({ length: 144 }, (_, i) => i + 1).map((w) => (
-                    <option key={w} value={w} className="bg-[#4a0011] text-white">
-                      ওয়ার্ড {w}
-                    </option>
-                  ))}
-                </select>
-                {errors.wardNo && (
-                  <p className="text-rose-300 text-xs mt-1">{errors.wardNo}</p>
+                />
+                {errors.contactPerson && (
+                  <p className="text-rose-300 text-xs mt-1">{errors.contactPerson}</p>
                 )}
               </div>
             </div>
 
-            {/* Row 3: Full Address */}
+            {/* Row 4: Address and Location of Pandal */}
             <div>
               <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                সম্পূর্ণ ঠিকানা ও প্যান্ডেলের অবস্থান <span className="text-amber-400">*</span>
+                Address and Location of Pandal <span className="text-amber-400">*</span>
               </label>
               <textarea
                 rows={2}
@@ -395,7 +461,7 @@ export default function RegistrationForm() {
                 value={formData.address}
                 onChange={handleChange}
                 maxLength={300}
-                placeholder="প্যান্ডেলের সম্পূর্ণ ঠিকানা ও ল্যান্ডমার্ক উল্লেখ করুন..."
+                placeholder="Full address of the puja pandal with landmark..."
                 className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
                   errors.address
                     ? "border-red-500 ring-1 ring-red-500"
@@ -407,11 +473,11 @@ export default function RegistrationForm() {
               )}
             </div>
 
-            {/* Row 4: Contact Number & Email */}
+            {/* Row 5: Contact Number & Email ID */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                  যোগাযোগ নম্বর (১০ সংখ্যার মোবাইল) <span className="text-amber-400">*</span>
+                  Contact Number <span className="text-amber-400">*</span>
                 </label>
                 <input
                   type="tel"
@@ -419,7 +485,7 @@ export default function RegistrationForm() {
                   value={formData.contactNumber}
                   onChange={handleChange}
                   maxLength={10}
-                  placeholder="উদাঃ 9830012345"
+                  placeholder="10-digit mobile (e.g. 9830012345)"
                   className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
                     errors.contactNumber
                       ? "border-red-500 ring-1 ring-red-500"
@@ -433,14 +499,14 @@ export default function RegistrationForm() {
 
               <div>
                 <label className="block text-sm font-semibold text-rose-100 mb-1.5">
-                  ইমেইল ঠিকানা (লগইন ইউজার আইডি) <span className="text-amber-400">*</span>
+                  Email ID <span className="text-amber-400">*</span>
                 </label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="উদাঃ committee@gmail.com"
+                  placeholder="e.g. committee@gmail.com"
                   className={`w-full bg-[#3b000f]/80 border rounded-lg px-4 py-2.5 text-white placeholder-rose-300/40 focus:outline-none transition-colors ${
                     errors.email
                       ? "border-red-500 ring-1 ring-red-500"
@@ -454,16 +520,16 @@ export default function RegistrationForm() {
             </div>
 
             {/* Instant Password Generation Note */}
-            <div className="p-3 bg-[#2d000b]/60 border border-amber-500/20 rounded-lg text-xs text-rose-200/70">
+            {/* <div className="p-3 bg-[#2d000b]/60 border border-amber-500/20 rounded-lg text-xs text-rose-200/70">
               ℹ️ ফর্মটি জমা দেওয়ার সাথে সাথে আপনার স্ক্রিনে ও ইমেইলে একটি সুরক্ষিত লগইন পাসওয়ার্ড দেওয়া হবে।
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <div className="pt-2">
               <button
                 type="submit"
                 disabled={isLoading}
-                className="btn-gold w-full py-3.5 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                className="btn-gold w-full py-3.5 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed text-slate-950"
               >
                 {isLoading ? (
                   <>
@@ -471,11 +537,11 @@ export default function RegistrationForm() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    <span>তথ্য যাচাই ও পাসওয়ার্ড তৈরি হচ্ছে...</span>
+                    <span>Please Wait...</span>
                   </>
                 ) : (
                   <>
-                    <span>ফর্ম জমা দিন ও পাসওয়ার্ড পান</span>
+                    <span>Submit</span>
                     <span className="text-xl leading-none">→</span>
                   </>
                 )}

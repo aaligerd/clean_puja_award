@@ -295,13 +295,13 @@ export default function CommitteeDashboard() {
       <header className="bg-[#4a0011] border-b border-amber-500/25 py-3.5 px-4 sm:px-8 sticky top-0 z-40 shadow-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative w-16 h-16 rounded-full overflow-hidden bg-white/10 p-0.5 border border-amber-400/40">
+            <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
               <Image
-                src="https://images.assettype.com/eisamay/2026-09-14/9yn8yftt/es-logo.png"
+                src="/brand-icon.png"
                 alt="এই সময় লোগো"
-                width={64}
-                height={64}
-                className="w-full h-full object-contain rounded-full"
+                width={54}
+                height={54}
+                className="w-full h-full object-cover scale-135"
                 priority
               />
             </div>
@@ -532,8 +532,15 @@ export default function CommitteeDashboard() {
         <div className="chalchitra-border p-6 sm:p-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-amber-500/20">
             <div>
-              <div className="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-400/30 px-3 py-0.5 rounded-full text-amber-300 text-xs font-semibold mb-2">
-                <span>Ward No: {committee?.wardNo} (KMC)</span>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-400/30 px-3 py-0.5 rounded-full text-amber-300 text-xs font-semibold">
+                  <span>Ward No: {committee?.wardNo} (KMC)</span>
+                </span>
+                {committee?.zone && (
+                  <span className="inline-flex items-center bg-cyan-500/15 border border-cyan-400/30 px-3 py-0.5 rounded-full text-cyan-300 text-xs font-semibold">
+                    <span>Zone: {committee.zone}</span>
+                  </span>
+                )}
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
                 {committee?.committeeName}
@@ -555,12 +562,13 @@ export default function CommitteeDashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-6 text-sm">
             <div className="bg-[#2a0009]/70 p-3.5 rounded-xl border border-amber-500/20">
-              <span className="text-xs text-rose-300 block mb-1">Area</span>
-              <span className="font-semibold text-white">{committee?.area}</span>
+              <span className="text-xs text-rose-300 block mb-1">Zone & Area:</span>
+              <span className="font-semibold text-white">{committee?.zone ? `${committee.zone} - ${committee?.area}` : committee?.area}</span>
             </div>
             <div className="bg-[#2a0009]/70 p-3.5 rounded-xl border border-amber-500/20">
-              <span className="text-xs text-rose-300 block mb-1">Contact Number:</span>
-              <span className="font-semibold text-white font-mono">{committee?.contactNumber}</span>
+              <span className="text-xs text-rose-300 block mb-1">Contact Person:</span>
+              <span className="font-semibold text-white truncate block">{committee?.contactPerson || "N/A"}</span>
+              <span className="text-xs text-amber-300/90 font-mono mt-0.5 block">{committee?.contactNumber}</span>
             </div>
             <div className="bg-[#2a0009]/70 p-3.5 rounded-xl border border-amber-500/20">
               <span className="text-xs text-rose-300 block mb-1">Email ID:</span>

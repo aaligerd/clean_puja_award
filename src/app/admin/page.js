@@ -21,6 +21,7 @@ export default function AdminDashboardPage() {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedWard, setSelectedWard] = useState("ALL");
+  const [selectedZone, setSelectedZone] = useState("ALL");
   const [selectedStatus, setSelectedStatus] = useState("ALL");
   const [selectedPhotoFilter, setSelectedPhotoFilter] = useState("ALL");
   const [sortBy, setSortBy] = useState("latest");
@@ -76,6 +77,7 @@ export default function AdminDashboardPage() {
       const params = new URLSearchParams();
       if (searchQuery) params.append("q", searchQuery);
       if (selectedWard !== "ALL") params.append("ward", selectedWard);
+      if (selectedZone !== "ALL") params.append("zone", selectedZone);
       if (selectedStatus !== "ALL") params.append("status", selectedStatus);
       if (selectedPhotoFilter !== "ALL") params.append("photoFilter", selectedPhotoFilter);
       if (sortBy) params.append("sortBy", sortBy);
@@ -131,7 +133,7 @@ export default function AdminDashboardPage() {
       }, 250);
       return () => clearTimeout(timer);
     }
-  }, [searchQuery, selectedWard, selectedStatus, selectedPhotoFilter, sortBy]);
+  }, [searchQuery, selectedWard, selectedZone, selectedStatus, selectedPhotoFilter, sortBy]);
 
   // Keyboard shortcut (Esc to close modals)
   useEffect(() => {
@@ -300,13 +302,13 @@ export default function AdminDashboardPage() {
       <header className="bg-[#36000d] border-b border-amber-500/25 py-3.5 px-4 sm:px-8 sticky top-0 z-40 shadow-xl backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 p-0.5 border border-amber-400/40">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
               <Image
-                src="https://images.assettype.com/eisamay/2026-09-14/9yn8yftt/es-logo.png"
+                src="/brand-icon.png"
                 alt="Ei Samay Logo"
-                width={32}
-                height={32}
-                className="w-full h-full object-contain rounded-full"
+                width={40}
+                height={40}
+                className="w-full h-full object-cover scale-135"
                 priority
               />
             </div>
@@ -491,7 +493,7 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Filter Dropdowns */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-amber-500/20 text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-3 border-t border-amber-500/20 text-xs">
             {/* Status Filter */}
             <div>
               <label className="block text-rose-300 font-semibold mb-1">Status Filter:</label>
@@ -522,6 +524,21 @@ export default function AdminDashboardPage() {
                 <option value="ONLY_DURING">During Puja Photos Only</option>
                 <option value="ONLY_AFTER">After Puja Photos Only</option>
                 <option value="NO_PHOTOS">No Photos Uploaded (0)</option>
+              </select>
+            </div>
+
+            {/* Zone Filter */}
+            <div>
+              <label className="block text-rose-300 font-semibold mb-1">Zone Filter:</label>
+              <select
+                value={selectedZone}
+                onChange={(e) => setSelectedZone(e.target.value)}
+                className="w-full bg-[#1c0006] border border-amber-500/30 rounded-lg px-2.5 py-2 text-white focus:outline-none focus:border-amber-400"
+              >
+                <option value="ALL">All Zones</option>
+                <option value="North Kolkata">North Kolkata</option>
+                <option value="Central Kolkata">Central Kolkata</option>
+                <option value="South Kolkata">South Kolkata</option>
               </select>
             </div>
 
@@ -582,6 +599,11 @@ export default function AdminDashboardPage() {
                     <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-400/40">
                       Ward {item.wardNo}
                     </span>
+                    {item.zone && (
+                      <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-400/40">
+                        🏙️ {item.zone}
+                      </span>
+                    )}
                     <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-white/10 text-rose-100 font-medium">
                       📍 {item.area}
                     </span>
@@ -619,6 +641,11 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-rose-200/70 pt-1">
+                    {item.contactPerson && (
+                      <span>
+                        👤 <strong className="text-rose-200 font-medium">{item.contactPerson}</strong>
+                      </span>
+                    )}
                     <span>📞 {item.contactNumber}</span>
                     <span>✉️ {item.email}</span>
                     <span>🏠 {item.address}</span>
@@ -698,10 +725,15 @@ export default function AdminDashboardPage() {
             {/* Modal Header */}
             <div className="p-5 sm:p-6 border-b border-amber-500/25 bg-[#36000d] flex items-center justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
                   <span className="text-xs px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/40">
                     Ward No {reviewCommittee.wardNo} (KMC)
                   </span>
+                  {reviewCommittee.zone && (
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 font-bold border border-cyan-400/40">
+                      🏙️ {reviewCommittee.zone}
+                    </span>
+                  )}
                   <span className="text-xs text-rose-200/80">📍 {reviewCommittee.area}</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black text-white">
@@ -813,6 +845,16 @@ export default function AdminDashboardPage() {
                     Committee Information
                   </h4>
                   <div className="space-y-2 text-xs text-rose-100/90">
+                    {reviewCommittee.zone && (
+                      <p>
+                        <strong className="text-rose-300">Zone:</strong> {reviewCommittee.zone}
+                      </p>
+                    )}
+                    {reviewCommittee.contactPerson && (
+                      <p>
+                        <strong className="text-rose-300">Contact Person:</strong> {reviewCommittee.contactPerson}
+                      </p>
+                    )}
                     <p>
                       <strong className="text-rose-300">Address:</strong> {reviewCommittee.address}
                     </p>
