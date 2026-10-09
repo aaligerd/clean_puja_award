@@ -563,7 +563,7 @@ export default function CommitteeDashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-6 text-sm">
             <div className="bg-[#2a0009]/70 p-3.5 rounded-xl border border-amber-500/20">
-              <span className="text-xs text-rose-300 block mb-1">Zone & Area:</span>
+              <span className="text-xs text-rose-300 block mb-1">Area:</span>
               <span className="font-semibold text-white">{committee?.zone ? `${committee.zone} - ${committee?.area}` : committee?.area}</span>
             </div>
             <div className="bg-[#2a0009]/70 p-3.5 rounded-xl border border-amber-500/20">
@@ -670,8 +670,11 @@ export default function CommitteeDashboard() {
                   counts?.duringCount >= counts?.duringMax ||
                   uploadTask !== null
                 }
-                className="btn-gold w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="btn-gold w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-md"
               >
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
                 <span>Upload Image</span>
               </button>
             </div>
@@ -766,8 +769,11 @@ export default function CommitteeDashboard() {
                   counts?.afterCount >= counts?.afterMax ||
                   uploadTask !== null
                 }
-                className="btn-gold w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="btn-gold w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-md"
               >
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
                 <span>Upload Image</span>
               </button>
             </div>

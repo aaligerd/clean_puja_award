@@ -1,11 +1,37 @@
-import { Hind_Siliguri } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const bengaliFont = Hind_Siliguri({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["bengali", "latin"],
+const samayFont = localFont({
+  src: [
+    {
+      path: "../fonts/4CSamayUni Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../fonts/4CSamayUni.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/4CSamayUniBold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../fonts/4CSamayUniExtraBold.ttf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-4c-samay",
   display: "swap",
-  variable: "--font-bengali",
+  declarations: [
+    {
+      prop: "unicode-range",
+      value: "U+0980-09FF, U+0964-0965, U+200C-200D, U+25CC",
+    },
+  ],
 });
 
 export const metadata = {
@@ -18,7 +44,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="bn" className={`${bengaliFont.variable} h-full antialiased`}>
+    <html lang="bn" className={`${samayFont.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans selection:bg-amber-400 selection:text-red-950">
         {children}
       </body>

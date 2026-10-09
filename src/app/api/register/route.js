@@ -21,23 +21,31 @@ export async function POST(request) {
 
     // 1. Validation
     const errors = {};
+    const noSpecialCharRegex = /^[a-zA-Z0-9\u0980-\u09FF\s]+$/;
+    const nameOnlyRegex = /^[a-zA-Z\u0980-\u09FF\s]+$/;
 
     if (!pujoName || typeof pujoName !== 'string' || !pujoName.trim()) {
       errors.pujoName = 'পূজার নাম আবশ্যক।';
     } else if (pujoName.trim().length > 150) {
       errors.pujoName = 'পূজার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
+    } else if (!noSpecialCharRegex.test(pujoName.trim())) {
+      errors.pujoName = 'পূজার নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।';
     }
 
     if (!committeeName || typeof committeeName !== 'string' || !committeeName.trim()) {
       errors.committeeName = 'পূজা কমিটির নাম আবশ্যক।';
     } else if (committeeName.trim().length > 150) {
       errors.committeeName = 'কমিটির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
+    } else if (!noSpecialCharRegex.test(committeeName.trim())) {
+      errors.committeeName = 'কমিটির নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।';
     }
 
     if (!area || typeof area !== 'string' || !area.trim()) {
       errors.area = 'এলাকা বা লোকালিটির নাম আবশ্যক।';
     } else if (area.trim().length > 150) {
       errors.area = 'এলাকার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
+    } else if (!noSpecialCharRegex.test(area.trim())) {
+      errors.area = 'এলাকার নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।';
     }
 
     const validZones = ['North Kolkata', 'Central Kolkata', 'South Kolkata'];
@@ -60,6 +68,8 @@ export async function POST(request) {
       errors.contactPerson = 'কমিটির দায়িত্বপ্রাপ্ত ব্যক্তির নাম আবশ্যক।';
     } else if (contactPerson.trim().length > 150) {
       errors.contactPerson = 'দায়িত্বপ্রাপ্ত ব্যক্তির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।';
+    } else if (!nameOnlyRegex.test(contactPerson.trim())) {
+      errors.contactPerson = 'দায়িত্বপ্রাপ্ত ব্যক্তির নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।';
     }
 
     const cleanedContact = (contactNumber || '').toString().trim().replace(/[\s-]/g, '');

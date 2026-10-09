@@ -1,5 +1,52 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: '4CSamayUni';
+  src: url('/fonts/4CSamayUni%20Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0980-09FF, U+0964-0965, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: '4CSamayUni';
+  src: url('/fonts/4CSamayUni.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0980-09FF, U+0964-0965, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: '4CSamayUni';
+  src: url('/fonts/4CSamayUniBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0980-09FF, U+0964-0965, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: '4CSamayUni';
+  src: url('/fonts/4CSamayUniExtraBold.ttf') format('truetype');
+  font-weight: 800 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0980-09FF, U+0964-0965, U+200C-200D, U+25CC;
+}
+
+/* Latin font definition with size-adjust for prominent, bigger English letters */
+@font-face {
+  font-family: 'AppLatin';
+  src: local('Segoe UI'), local('-apple-system'), local('BlinkMacSystemFont'), local('Roboto'), local('Helvetica Neue'), local('Arial');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 112%;
+  unicode-range: U+0000-007F, U+0080-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+}
+
 :root {
   /* Brand Crimson & Maroon from Ei Samay / Pujor Somoy */
   --puja-header-bg: #520014;
@@ -26,6 +73,8 @@
 }
 
 @theme {
+  --font-sans: '4CSamayUni', 'AppLatin', var(--font-4c-samay), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-bengali: '4CSamayUni', var(--font-4c-samay), sans-serif;
   --color-puja-header: var(--puja-header-bg);
   --color-puja-dark: var(--puja-bg-dark);
   --color-puja-mid: var(--puja-bg-mid);
@@ -43,7 +92,7 @@ body {
   background-attachment: fixed;
   color: var(--puja-text-white);
   min-height: 100vh;
-  font-family: var(--font-bengali), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: '4CSamayUni', 'AppLatin', var(--font-4c-samay), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Chalchitra (চালচিত্র) ornamental arch border effect */

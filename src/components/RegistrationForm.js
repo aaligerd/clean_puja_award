@@ -26,17 +26,23 @@ export default function RegistrationForm() {
   // Client-side Validation
   const validate = () => {
     const errs = {};
+    const noSpecialCharRegex = /^[a-zA-Z0-9\u0980-\u09FF\s]+$/;
+    const nameOnlyRegex = /^[a-zA-Z\u0980-\u09FF\s]+$/;
 
     if (!formData.pujoName.trim()) {
       errs.pujoName = "পূজার নাম আবশ্যক।";
     } else if (formData.pujoName.trim().length > 150) {
       errs.pujoName = "পূজার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
+    } else if (!noSpecialCharRegex.test(formData.pujoName.trim())) {
+      errs.pujoName = "পূজার নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।";
     }
 
     if (!formData.committeeName.trim()) {
       errs.committeeName = "পূজা কমিটির নাম আবশ্যক।";
     } else if (formData.committeeName.trim().length > 150) {
       errs.committeeName = "কমিটির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
+    } else if (!noSpecialCharRegex.test(formData.committeeName.trim())) {
+      errs.committeeName = "কমিটির নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।";
     }
 
     const validZones = ["North Kolkata", "Central Kolkata", "South Kolkata"];
@@ -48,6 +54,8 @@ export default function RegistrationForm() {
       errs.area = "এলাকা বা লোকালিটির নাম আবশ্যক।";
     } else if (formData.area.trim().length > 150) {
       errs.area = "এলাকার নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
+    } else if (!noSpecialCharRegex.test(formData.area.trim())) {
+      errs.area = "এলাকার নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।";
     }
 
     const ward = parseInt(formData.wardNo, 10);
@@ -65,6 +73,8 @@ export default function RegistrationForm() {
       errs.contactPerson = "কমিটির দায়িত্বপ্রাপ্ত ব্যক্তির নাম আবশ্যক।";
     } else if (formData.contactPerson.trim().length > 150) {
       errs.contactPerson = "দায়িত্বপ্রাপ্ত ব্যক্তির নাম সর্বোচ্চ ১৫০ অক্ষরের মধ্যে হতে হবে।";
+    } else if (!nameOnlyRegex.test(formData.contactPerson.trim())) {
+      errs.contactPerson = "দায়িত্বপ্রাপ্ত ব্যক্তির নামে কোনো স্পেশাল ক্যারেক্টার ব্যবহার করা যাবে না।";
     }
 
     const cleanedPhone = formData.contactNumber.trim().replace(/[\s-]/g, "");
@@ -87,7 +97,19 @@ export default function RegistrationForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let sanitizedValue = value;
+
+    // Disallow special characters for pujoName, committeeName, area, contactPerson, contactNumber
+    // Only address and email id can accept special characters
+    if (name === "pujoName" || name === "committeeName" || name === "area") {
+      sanitizedValue = value.replace(/[^a-zA-Z0-9\u0980-\u09FF\s]/g, "");
+    } else if (name === "contactPerson") {
+      sanitizedValue = value.replace(/[^a-zA-Z\u0980-\u09FF\s]/g, "");
+    } else if (name === "contactNumber") {
+      sanitizedValue = value.replace(/\D/g, "").slice(0, 10);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: sanitizedValue }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
     }

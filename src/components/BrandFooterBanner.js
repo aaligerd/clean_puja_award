@@ -53,7 +53,7 @@ export default function BrandFooterBanner() {
 
           {/* X (formerly Twitter) */}
           <a
-            href="https://twitter.com/eisamay"
+            href="https://x.com/Ei_Samay"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X (Twitter)"
@@ -66,7 +66,7 @@ export default function BrandFooterBanner() {
 
           {/* LinkedIn */}
           <a
-            href="https://www.linkedin.com/company/eisamay/"
+            href="https://www.linkedin.com/company/ei-samay/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -79,7 +79,7 @@ export default function BrandFooterBanner() {
 
           {/* YouTube */}
           <a
-            href="https://www.youtube.com/@EiSamayOfficial"
+            href="https://www.youtube.com/@EiSamayonline"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
@@ -134,7 +134,7 @@ export default function BrandFooterBanner() {
           </a>
           <span className="text-amber-300/40 select-none">|</span>
           <a
-            href="https://eisamay.com/terms-and-conditions"
+            href="https://eisamay.com/terms-and-condition"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors px-2 py-0.5"
