@@ -10,7 +10,7 @@ export default function HomePage() {
     <div className="flex-1 flex flex-col">
       {/* Top Brand Navbar (Ei Samay / Pujor Somoy inspired) */}
       <header className="bg-[#4a0011] border-b border-amber-500/25 sticky top-0 z-50 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-24 flex items-center justify-between">
           <div className="flex items-center gap-3 sm:gap-4">
             {/* <button className="text-white hover:text-amber-400 transition-colors p-1" aria-label="Menu">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,12 +20,12 @@ export default function HomePage() {
             
             <Link href="/" className="flex items-center gap-2.5 group">
               {/* Brand Logo (Ei Samay) */}
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 shrink-0 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
                 <Image
                   src="/brand-icon.png"
                   alt="এই সময় লোগো"
-                  width={40}
-                  height={40}
+                  width={80}
+                  height={80}
                   className="w-full h-full object-cover scale-110"
                   priority
                 />
@@ -43,7 +43,7 @@ export default function HomePage() {
                 />
               </div> */}
 
-              <span className="hidden md:inline-block md:text-2xl px-2.5  font-bold">
+              <span className="hidden md:inline-block md:text-3xl lg:text-4xl px-2.5 font-bold tracking-wide">
                 ক্লিন পুজো অ্যাওয়ার্ড
               </span>
             </Link>
@@ -85,7 +85,7 @@ export default function HomePage() {
             <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             <span>ক্লিন পূজা সম্মাননা ২০২৬</span>
           </div> */}
-          <p className="g:inline-block text-xl md:hidden px-2.5  font-bold">
+          <p className="inline-block text-2xl md:hidden px-2.5 font-bold mb-2 text-amber-200">
             ক্লিন পুজো অ্যাওয়ার্ড
           </p>
           <h1 className="text-3xl sm:text-5xl md:text-5xl font-extrabold text-white leading-tight tracking-tight mb-6">
