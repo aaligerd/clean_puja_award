@@ -20,13 +20,13 @@ export default function HomePage() {
             
             <Link href="/" className="flex items-center gap-2.5 group">
               {/* Brand Logo (Ei Samay) */}
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full overflow-hidden bg-white border border-amber-400/40 shadow flex items-center justify-center">
                 <Image
                   src="/brand-icon.png"
                   alt="এই সময় লোগো"
-                  width={60}
-                  height={60}
-                  className="w-full h-full object-cover scale-135"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover scale-110"
                   priority
                 />
               </div>
@@ -43,7 +43,7 @@ export default function HomePage() {
                 />
               </div> */}
 
-              <span className="hidden lg:inline-block text-lg bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/30 font-medium">
+              <span className="hidden md:inline-block md:text-2xl px-2.5  font-bold">
                 ক্লিন পুজো অ্যাওয়ার্ড
               </span>
             </Link>
@@ -57,12 +57,6 @@ export default function HomePage() {
           </nav> */}
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-xs sm:text-sm text-amber-300 hover:text-white px-3 py-1.5 border border-amber-400/40 rounded-full transition-colors"
-            >
-              Committee Login
-            </Link>
             <a
               href="#register"
               className="btn-gold btn-glow-sync text-xs sm:text-sm px-4 py-1.5 rounded-full flex items-center gap-1.5"
@@ -70,6 +64,13 @@ export default function HomePage() {
               <span>Register</span>
               <span className="text-base leading-none">→</span>
             </a>
+            <Link
+              href="/login"
+              className="text-xs sm:text-sm text-amber-300 hover:text-white px-3 py-1.5 border border-amber-400/40 rounded-full transition-colors"
+            >
+              Committee Login
+            </Link>
+            
           </div>
         </div>
       </header>
@@ -84,7 +85,9 @@ export default function HomePage() {
             <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             <span>ক্লিন পূজা সম্মাননা ২০২৬</span>
           </div> */}
-
+          <p className="g:inline-block text-xl md:hidden px-2.5  font-bold">
+            ক্লিন পুজো অ্যাওয়ার্ড
+          </p>
           <h1 className="text-3xl sm:text-5xl md:text-5xl font-extrabold text-white leading-tight tracking-tight mb-6">
             আপনার পুজোকে দিন <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500">পরিচ্ছন্নতার শীর্ষ সম্মান</span>
           </h1>
